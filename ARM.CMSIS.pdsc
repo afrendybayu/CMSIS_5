@@ -8,6 +8,10 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.2.1-dev1">
+      CMSIS-Core(A): 1.2.0 (see revision history for details)
+        - Added support for Cortex-A32.
+    </release>
     <release version="5.2.0-rc1">
       CMSIS-Core(M): 5.1.0 (see revision history for details)
         - Added MPU Functions for ARMv8-M for Cortex-M23/M33.
@@ -611,6 +615,24 @@ and 8-bit Java bytecodes in Jazelle state.
       <device Dname="ARMCA9">
         <processor Dcore="Cortex-A9" DcoreVersion="r4p1" Dfpu="DP_FPU" Dmpu="MPU" Dendian="Configurable"/>
         <compile header="Device/ARM/ARMCA9/Include/ARMCA9.h" define="ARMCA9"/>
+      </device>
+    </family>
+
+    <!-- ******************************  Cortex-A32  ****************************** -->
+    <family Dfamily="ARM Cortex A32" Dvendor="ARM:82">
+      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.100511_0401_10_en/index.html" title="Cortex-A32 Technical Reference Manual"/>
+      <description>
+The Cortex-A32 processor is a high-performance, low-power, ARM macrocell with an L1 cache subsystem that provides full virtual memory capabilities.
+The Cortex-A32 processor implements the ARMv7-A architecture and runs 32-bit ARM instructions, 16-bit and 32-bit Thumb instructions,
+and 8-bit Java bytecodes in Jazelle state.
+      </description>
+
+      <memory id="IROM1"                                start="0x80000000" size="0x00200000" startup="1" default="1"/>
+      <memory id="IRAM1"                                start="0x80200000" size="0x00200000" init   ="0" default="1"/>
+
+      <device Dname="ARMCA32">
+        <processor Dcore="Cortex-A32" DcoreVersion="r4p1" Dfpu="DP_FPU" Dmpu="MPU" Dendian="Configurable"/>
+        <compile header="Device/ARM/ARMCA32/Include/ARMCA32.h" define="ARMCA32"/>
       </device>
     </family>
   </devices>
@@ -2007,6 +2029,12 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
 
+    <condition id="ARMCA32 CMSIS">
+      <description>Generic ARM Cortex-A32 device startup and depends on CMSIS Core</description>
+      <require Dvendor="ARM:82" Dname="ARMCA32"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+
     <!-- CMSIS DSP -->
     <condition id="CMSIS DSP">
       <description>Components required for DSP</description>
@@ -2472,6 +2500,28 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/mmu_ARMCA9.c"         version="1.0.0" attr="config"/>
         <file category="header"       name="Device/ARM/ARMCA9/Include/system_ARMCA9.h"     version="1.0.0" attr="config"/>
         <file category="header"       name="Device/ARM/ARMCA9/Include/mem_ARMCA9.h"        version="1.0.0" attr="config"/>
+      </files>
+    </component>
+
+    <!-- Cortex-A32 -->
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.0" condition="ARMCA32 CMSIS">
+      <description>System and Startup for Generic ARM Cortex-A32 device</description>
+      <files>
+        <!-- include folder / device header file -->
+        <file category="include"  name="Device/ARM/ARMCA32/Include/"/>
+        <!-- startup / system / mmu files -->
+        <file category="sourceC"      name="Device/ARM/ARMCA32/Source/AC5/startup_ARMCA32.c" version="1.0.0" attr="config" condition="ARMCC5"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA32/Source/AC5/ARMCA32.sct"       version="1.0.0" attr="config" condition="ARMCC5"/>
+        <file category="sourceC"      name="Device/ARM/ARMCA32/Source/AC6/startup_ARMCA32.c" version="1.0.0" attr="config" condition="ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA32/Source/AC6/ARMCA32.sct"       version="1.0.0" attr="config" condition="ARMCC6"/>
+        <file category="sourceC"      name="Device/ARM/ARMCA32/Source/GCC/startup_ARMCA32.c" version="1.0.0" attr="config" condition="GCC"/>
+        <file category="other"        name="Device/ARM/ARMCA32/Source/GCC/ARMCA32.ld"        version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCA32/Source/IAR/startup_ARMCA32.s" version="1.0.0" attr="config" condition="IAR"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA32/Source/IAR/ARMCA32.icf"       version="1.0.0" attr="config" condition="IAR"/>
+        <file category="sourceC"      name="Device/ARM/ARMCA32/Source/system_ARMCA32.c"      version="1.0.0" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCA32/Source/mmu_ARMCA32.c"         version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA32/Include/system_ARMCA32.h"     version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA32/Include/mem_ARMCA32.h"        version="1.0.0" attr="config"/>
       </files>
     </component>
 
@@ -3059,6 +3109,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <mountedDevice    deviceIndex="0" Dvendor="ARM:82" Dname="ARMCA5"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCA7"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCA9"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCA32"/>
     </board>
   </boards>
 
