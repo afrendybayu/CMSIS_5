@@ -35,17 +35,12 @@ DEVICE_CA9     = 'Cortex-A9'
 DEVICE_CA5NEON = 'Cortex-A5neon'
 DEVICE_CA7NEON = 'Cortex-A7neon'
 DEVICE_CA9NEON = 'Cortex-A9neon'
+DEVICE_CA32    = 'Cortex-A32'
 
 CC_AC6 = 'AC6'
 CC_AC5 = 'AC5'
 CC_GCC = 'GCC'
 CC_IAR = 'IAR'
-
-MDK_ENV = {
-  'uVision' : [ DEVICE_CM0, DEVICE_CM0PLUS, DEVICE_CM3, DEVICE_CM4, DEVICE_CM4FP, DEVICE_CM7, DEVICE_CM7SP, DEVICE_CM7DP, DEVICE_CM23, DEVICE_CM33, DEVICE_CM23NS, DEVICE_CM33NS, DEVICE_CM23S, DEVICE_CM33S ],
-  'DS'      : [ ], 
-  'RTE'     : [ DEVICE_CA5, DEVICE_CA7, DEVICE_CA9, DEVICE_CA5NEON, DEVICE_CA7NEON, DEVICE_CA9NEON ]
-}
 
 TARGET_FVP = 'FVP'
 
@@ -69,10 +64,11 @@ ADEVICES = {
     DEVICE_CA9     : 'CA9',
     DEVICE_CA5NEON : 'CA5neon',
     DEVICE_CA7NEON : 'CA7neon',
-    DEVICE_CA9NEON : 'CA9neon'
+    DEVICE_CA9NEON : 'CA9neon',
+    DEVICE_CA32    : 'CA32'
   }
 
-DEVICES = [ DEVICE_CM0, DEVICE_CM0PLUS, DEVICE_CM3, DEVICE_CM4, DEVICE_CM4FP, DEVICE_CM7, DEVICE_CM7SP, DEVICE_CM7DP, DEVICE_CM23, DEVICE_CM33, DEVICE_CM23NS, DEVICE_CM33NS, DEVICE_CM23S, DEVICE_CM33S, DEVICE_CA5, DEVICE_CA7, DEVICE_CA9, DEVICE_CA5NEON, DEVICE_CA7NEON, DEVICE_CA9NEON ]
+DEVICES = [ DEVICE_CM0, DEVICE_CM0PLUS, DEVICE_CM3, DEVICE_CM4, DEVICE_CM4FP, DEVICE_CM7, DEVICE_CM7SP, DEVICE_CM7DP, DEVICE_CM23, DEVICE_CM33, DEVICE_CM23NS, DEVICE_CM33NS, DEVICE_CM23S, DEVICE_CM33S, DEVICE_CA5, DEVICE_CA7, DEVICE_CA9, DEVICE_CA5NEON, DEVICE_CA7NEON, DEVICE_CA9NEON, DEVICE_CA32 ]
 COMPILERS = [ CC_AC5, CC_AC6, CC_GCC, CC_IAR ]
 TARGETS = [ TARGET_FVP ]
 
@@ -83,6 +79,8 @@ SKIP = [
     [ DEVICE_CM33NS, CC_AC5, None ],
     [ DEVICE_CM23S,  CC_AC5, None ],
     [ DEVICE_CM33S,  CC_AC5, None ],
+    [ DEVICE_CA32,   CC_AC5, None ],
+    [ DEVICE_CA32,   CC_IAR, None ],
   ]
   
 FVP_MODELS = { 
@@ -105,7 +103,8 @@ FVP_MODELS = {
     DEVICE_CA9      : { 'cmd': "fvp_ve_cortex-a9x1.exe",          'args': { 'limit': "70000000", 'config': "ARMCA9_config.txt" } },
     DEVICE_CA5NEON  : { 'cmd': "fvp_ve_cortex-a5x1.exe",          'args': { 'limit': "70000000", 'config': "ARMCA5neon_config.txt" } },
     DEVICE_CA7NEON  : { 'cmd': "fvp_ve_cortex-a7x1.exe",          'args': { 'limit': "170000000", 'config': "ARMCA7neon_config.txt" } },
-    DEVICE_CA9NEON  : { 'cmd': "fvp_ve_cortex-a9x1.exe",          'args': { 'limit': "70000000", 'config': "ARMCA9neon_config.txt" } }
+    DEVICE_CA9NEON  : { 'cmd': "fvp_ve_cortex-a9x1.exe",          'args': { 'limit': "70000000", 'config': "ARMCA9neon_config.txt" } },
+    DEVICE_CA32     : { 'cmd': "FVP_Base_Cortex-A32x1.exe",       'args': { 'limit': "70000000", 'config': "ARMCA32_config.txt" } }
   }
 
 def isSkipped(dev, cc, target):
