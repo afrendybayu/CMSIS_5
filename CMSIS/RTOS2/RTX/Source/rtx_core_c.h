@@ -41,6 +41,9 @@
 #ifndef __ARM_ARCH_7EM__
 #define __ARM_ARCH_7EM__        0U
 #endif
+#ifndef __ARM_ARCH_8A__
+#define __ARM_ARCH_8A__         0U
+#endif
 #ifndef __ARM_ARCH_8M_BASE__
 #define __ARM_ARCH_8M_BASE__    0U
 #endif
@@ -52,12 +55,13 @@
         __ARM_ARCH_7A__      + \
         __ARM_ARCH_7M__      + \
         __ARM_ARCH_7EM__     + \
+        __ARM_ARCH_8A__      + \
         __ARM_ARCH_8M_BASE__ + \
         __ARM_ARCH_8M_MAIN__) != 1U)
 #error "Unknown ARM Architecture!"
 #endif
 
-#if (__ARM_ARCH_7A__ != 0U)
+#if ((__ARM_ARCH_7A__ != 0U)||(__ARM_ARCH_8A__ != 0U))
 #include "rtx_core_ca.h"
 #else
 #include "rtx_core_cm.h"
